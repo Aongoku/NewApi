@@ -1,28 +1,29 @@
-import React from "react";
+
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { Character } from '../types/character';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native"
+import { useNavigation } from '@react-navigation/native';
 
-interface Props{
-    Character:Character;
-    onPress:()=>void;
-}
+const CharacterCard = ({ character }: { character: Character }) => {
+    const navigate = useNavigation<any>();
+    const handlePress = () => {
+        // Navegar a la pantalla de detalles pasando el personaje como parámetro
+        navigate.navigate('DetailsScreen', { character });
+    };
 
-const CharacterCard = ({Character,onPress}:Props) =>{
-    return(
-        <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+    return (
+        <TouchableOpacity onPress={handlePress}>
             <View style={styles.card}>
-            <Image 
-                source={{ uri: Character.imagen_representativa[0]?.url }} 
-                style={styles.image} 
+            <Image
+                source={{ uri: character.imagen_representativa[0]?.url }}
+                style={styles.image}
             />
-
-            <Text style={styles.name}>{Character.nombre_personaje}</Text>
+                <Text style={styles.name}>{character.nombre_completo}</Text>
+                
             </View>
-
         </TouchableOpacity>
-    )
-
-}
+    );
+};
 
 export default CharacterCard
 
